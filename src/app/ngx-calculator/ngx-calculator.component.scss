@@ -1,0 +1,59 @@
+@import '../../variables.scss';
+
+.calc {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .calc-row {
+        display: flex;
+        flex-grow: 1;
+
+        .calc-button {
+            width: 25%;
+            height: auto;
+            margin: 0;
+            padding: 2vh;
+            border: none;
+            border-radius: 0;
+            color: map-get($colors, light-grey);
+            background: map-get($colors, dark);
+            font-size: 2.5rem;
+        }
+
+        .func {
+            background: map-get($colors, light-grey);
+            color: map-get($colors, dark);
+        }
+    }
+
+    .result {
+        flex-direction: row;
+        background: map-get($colors, dark-grey);
+        color: white;
+        text-align: right;
+        font-size: 6rem;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        flex-grow: 1;
+        padding: 2vw;
+    }
+
+    .right { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .clear {
+            background: transparent;
+            color: white;
+            border: none;
+        }
+    }
+}

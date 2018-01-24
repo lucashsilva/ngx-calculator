@@ -1,0 +1,36 @@
+<div class="calc">
+  <div class="calc-row result">
+    <div class="left">
+      {{ result || 0 }}
+    </div>
+    <div class="right">
+      <button class="clear" (click)="btnClicked('C')">
+       CLEAR
+      </button>
+    </div>
+  </div>
+  <div class="calc-row">
+    <button class="calc-button" (click)="btnClicked('7')"> 7 </button>
+    <button class="calc-button" (click)="btnClicked('8')"> 8 </button>
+    <button class="calc-button" (click)="btnClicked('9')"> 9 </button>
+    <button class="calc-button func" (click)="btnClicked('/')"> / </button>
+  </div>
+  <div class="calc-row">
+    <button class="calc-button" (click)="btnClicked('4')"> 4 </button>
+    <button class="calc-button" (click)="btnClicked('5')"> 5 </button>
+    <button class="calc-button" (click)="btnClicked('6')"> 6 </button>
+    <button class="calc-button func" (click)="btnClicked('*')"> * </button>
+  </div>
+  <div class="calc-row">
+    <button class="calc-button" (click)="btnClicked('1')"> 1 </button>
+    <button class="calc-button" (click)="btnClicked('2')"> 2 </button>
+    <button class="calc-button" (click)="btnClicked('3')"> 3 </button>
+    <button class="calc-button func" (click)="btnClicked('-')"> - </button>
+  </div>
+  <div class="calc-row">
+    <button class="calc-button" (click)="btnClicked('0')"> 0 </button>
+    <button class="calc-button" (click)="btnClicked('.')"> . </button>
+    <button class="calc-button func" (click)="btnClicked('=')"> = </button>
+    <button class="calc-button func" (click)="btnClicked('+')"> + </button>
+  </div>
+</div>
