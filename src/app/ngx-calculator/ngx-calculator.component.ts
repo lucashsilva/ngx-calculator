@@ -8,6 +8,11 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 const DEFAULT_FIXED_POINT_NUMBER = 3;
+const ERROR_TEXT = 'Error';
+const EMPTY_STRING = '';
+
+const BUTTON_CLEAR = 'C';
+const BUTTON_EQUAL = '=';
 
 const noop = () => { };
 
@@ -25,24 +30,24 @@ export class NgxCalculatorComponent implements ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
 
   constructor() { 
-    this.result = '';
+    this.result = EMPTY_STRING;
   }
 
   btnClicked(btn) {
     try {
-      if (btn == 'C') {
-        this.result = '';
+      if (btn == BUTTON_CLEAR) {
+        this.result = EMPTY_STRING;
         
         this.onChangeCallback(0);
-      } else if (btn == '=') {
+      } else if (btn == BUTTON_EQUAL) {
         this.result = this.stringifiedValue;
 
-        this.onChangeCallback(this.value);
+        this.onChangeCallback(this.value || 0);
       } else {
-        this.result = this.result == ''? btn : (this.result + btn);
+        this.result = (this.result == EMPTY_STRING || this.result == ERROR_TEXT)? btn : (this.result + btn);
       }
     } catch (error) {
-      this.result = '';
+      this.result = ERROR_TEXT;
     }
   }
 
@@ -59,7 +64,7 @@ export class NgxCalculatorComponent implements ControlValueAccessor {
   }
 
   get stringifiedValue() {
-    return (this.value % 1? this.value.toFixed(DEFAULT_FIXED_POINT_NUMBER): this.value) || '';
+    return (this.value % 1? this.value.toFixed(DEFAULT_FIXED_POINT_NUMBER): this.value) || EMPTY_STRING;
   }
 
   writeValue(obj: any): void {
