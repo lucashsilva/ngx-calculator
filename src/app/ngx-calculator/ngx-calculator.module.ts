@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxCalculatorComponent } from './ngx-calculator.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
-    NgxCalculatorComponent
+    NgxCalculatorComponent,
+    FormsModule
   ],
   declarations: [
     NgxCalculatorComponent

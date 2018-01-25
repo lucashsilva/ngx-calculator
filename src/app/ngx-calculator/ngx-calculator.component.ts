@@ -1,18 +1,30 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => NgxCalculatorComponent),
+    multi: true
+};
 
 const DEFAULT_FIXED_POINT_NUMBER = 3;
+
+const noop = () => { };
 
 @Component({
   selector: 'ngx-calculator',
   templateUrl: './ngx-calculator.component.html',
-  styleUrls: ['./ngx-calculator.component.scss']
+  styleUrls: ['./ngx-calculator.component.scss'],
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class NgxCalculatorComponent {
-  @Output() onResult: EventEmitter<number>;
+export class NgxCalculatorComponent implements ControlValueAccessor {
   result: string;
+  disabled: boolean;
+
+  private onTouchedCallback: () => void = noop;
+  private onChangeCallback: (_: any) => void = noop;
 
   constructor() { 
-    this.onResult = new EventEmitter();
     this.result = '';
   }
 
@@ -20,16 +32,53 @@ export class NgxCalculatorComponent {
     try {
       if (btn == 'C') {
         this.result = '';
+        
+        this.onChangeCallback(0);
       } else if (btn == '=') {
-        let number = eval(this.result);
+        this.result = this.stringifiedValue;
 
-        this.result = (number % 1? number.toFixed(DEFAULT_FIXED_POINT_NUMBER): number) || '';
-        this.onResult.emit(number);
+        this.onChangeCallback(this.value);
       } else {
         this.result += btn;
       }
     } catch (error) {
       this.result = '';
     }
+  }
+
+  get value(): any {
+    return eval(this.result);
+  };
+
+  set value(v: any) {
+    if (v !== this.value) {
+      this.result = v;
+
+      this.onChangeCallback(v);
+    }
+  }
+
+  get stringifiedValue() {
+    return (this.value % 1? this.value.toFixed(DEFAULT_FIXED_POINT_NUMBER): this.value) || '0';
+  }
+
+  writeValue(obj: any): void {
+    this.value = obj || 0;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  onBlur() {
+    this.onTouchedCallback();
   }
 }
