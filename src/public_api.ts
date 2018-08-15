@@ -1,0 +1,1 @@
+export * from './app/ngx-calculator/ngx-calculator.module';
