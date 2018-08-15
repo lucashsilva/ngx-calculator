@@ -22,7 +22,7 @@ npm install --save ngx-calculator
 2. Add `NgxCalculatorModule` as an import of your app module: 
 
 ```
-import { NgxCalculatorModule } from './ngx-calculator/ngx-calculator.module';
+import { NgxCalculatorModule } from 'ngx-calculator';
 
 @NgModule({
   ...
